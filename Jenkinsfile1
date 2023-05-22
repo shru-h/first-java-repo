@@ -13,7 +13,6 @@ stage("stage2:compile the code"){
     }
     stage("stage3:SonarQube analysis") {
     steps {
-    def mvnHome = tool name: 'mymaven', type:'maven'
         withSonarQubeEnv('sonarqube-token') {
         sh "mvn sonar:sonar"
         }
