@@ -1,24 +1,24 @@
 pipeline {
   agent any
   stages {
-    stage('Checkout') {
+    stage("stage1 : checkout stage") {
       steps {
-        git 'https://github.com/my-username/my-repo.git'
+git branch :'main' , url: 'https://github.com/shru-h/first-java-repo'  
+    }
+    }
+stage("stage2:compile the code"){
+        steps{
+        sh "mvn compile"
       }
     }
-    stage('Build') {
-      steps {
-        sh 'mvn clean package'
-      }
-    }
-    stage('SonarQube analysis') {
+    stage("stage3:SonarQube analysis") {
       steps {
         withSonarQubeEnv('my-sonarqube-server') {
           sh 'mvn sonar:sonar'
         }
       }
     }
-    stage('Quality Gate') {
+    stage("stage4:Quality Gate") {
       steps {
         timeout(time: 1, unit: 'HOURS') {
           def qg = waitForQualityGate()
@@ -30,3 +30,4 @@ pipeline {
     }
   }
 }
+
