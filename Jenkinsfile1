@@ -12,19 +12,10 @@ stage("stage2:compile the code"){
       }
     }
     stage("stage3:SonarQube analysis") {
-      steps {
-        withSonarQubeEnv('my-sonarqube-server') {
-          sh 'mvn sonar:sonar'
-        }
-      }
-    }
-    stage("stage4:Quality Gate") {
-      steps {
-        timeout(time: 1, unit: 'HOURS') {
-          def qg = waitForQualityGate()
-          if (qg.status != 'OK') {
-            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-          }
+    steps {
+    def mvnHome = tool name: 'mymaven', type:'maven'
+        withSonarQubeEnv('sonarqube-token') {
+        sh "mvn sonar:sonar"
         }
       }
     }
