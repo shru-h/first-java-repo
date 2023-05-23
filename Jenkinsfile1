@@ -13,7 +13,7 @@ stage("stage2:compile the code"){
     }
     stage("stage3:SonarQube analysis") {
     steps {
-        withSonarQubeEnv('sonarqube-token') {
+        withSonarQubeEnv('sonarqube') {
         sh "mvn sonar:sonar"
         }
       }
